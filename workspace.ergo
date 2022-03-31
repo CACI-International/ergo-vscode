@@ -1,0 +1,30 @@
+node-version = 16.14.2
+
+
+std:import { :cache, :match, :net, :env, :exec, :task, :Path } = $std
+
+node-binary = match "$(env:os)-$(env:arch)" [
+    linux-x86_64 -> linux-x64
+    macos-x86_64 -> darwin-x64
+]
+
+url = "https://nodejs.org/dist/v$node-version/node-v$(node-version)-$node-binary.tar.gz"
+bin = cache <| task "fetching node $node-version" {
+    dir = net:unarchive ^enter $url
+    bin = Path:join $dir bin
+    exec (env={PATH=$bin}) corepack enable --install-directory $bin |>:complete
+    $bin
+}
+
+# Yarn (npm) uses `sh` to spawn things, so include the usual PATH locations.
+yarn = fn ^:args -> exec (env={PATH="$bin:/usr/bin:/bin"}) yarn ^$args
+
+## Commands include:
+## * `package` - Build the vscode extension package.
+command = match:value [
+    fn package -> task "building the package" {
+        yarn install
+        yarn package
+        ()
+    }
+]
