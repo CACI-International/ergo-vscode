@@ -1,0 +1,25 @@
+{
+    "comments": {
+        "lineComment": "# "
+    },
+    "brackets": [["{","}"], ["(",")"], ["[","]"]],
+    "surroundingPairs": [
+        ["{","}"], ["(",")"], ["[","]"],
+        ["\"","\""]
+    ],
+    "wordPattern": "[%&'*+--9?-Z_-z~]+",
+    "onEnterRules": [
+        {
+            "beforeText": "^\\s*# ",
+            "action": { "indent": "none", "appendText": "# " }
+        },
+        {
+            "beforeText": "^\\s*## ",
+            "action": { "indent": "none", "appendText": "## " }
+        },
+        {
+            "beforeText": "(^\\s*' .*)|(' ?$)",
+            "action": { "indent": "none", "appendText": "' " }
+        }
+    ]
+}

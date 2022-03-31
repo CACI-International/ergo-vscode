@@ -1,0 +1,60 @@
+{
+    "name": "ergo-vscode",
+    "version": "0.1.0",
+    "description": "LSP Client, syntax settings, etc for the ergo language.",
+    "displayName": "Ergo",
+    "categories": ["Formatters", "Programming Languages"],
+    "publisher": "CACI",
+    "author": "Alex Franchuk",
+    "license": "Proprietary",
+    "icon": "images/icon.jpg",
+    "engines": {
+        "vscode": "^1.63.0"
+    },
+    "activationEvents": [
+        "onLanguage:ergo"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "ergo",
+            "extensions": [".ergo"],
+            "configuration": "./language-configuration.json"
+        }],
+        "semanticTokenScopes": [{
+            "language": "ergo",
+            "scopes": {
+                "comment.documentation": ["comment.documentation", "comment.block.documentation"]
+            }
+        }],
+        "configuration": {
+            "title": "Ergo",
+            "properties": {
+                "ergo.binary": {
+                    "type": "string",
+                    "default": "ergolang",
+                    "description": "The path or binary name for the ergolang executable."
+                }
+            }
+        }
+    },
+    "configurationDefaults": {
+        "ergo": {
+            "editor.semanticHighlighting.enabled": true
+        }
+    },
+    "main": "./out/extension.js",
+    "scripts": {
+        "compile": "tsc -b",
+        "vscode:prepublish": "npm run compile",
+        "package": "vsce package --allow-missing-repository"
+    },
+    "dependencies": {
+        "vscode-languageclient": "^7.0.0"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.63.0",
+        "@types/node": "^14.17.0",
+        "typescript": "^4.6.2",
+        "vsce": "^2.7.0"
+    }
+}
