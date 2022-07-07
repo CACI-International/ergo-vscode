@@ -10,14 +10,14 @@ node-binary = match "$(env:os)-$(env:arch)" [
 
 url = "https://nodejs.org/dist/v$node-version/node-v$(node-version)-$node-binary.tar.gz"
 bin = cache <| task "fetching node $node-version" {
-    dir = net:unarchive ^enter $url
+    dir = net:unarchive ~enter $url
     bin = Path:join $dir bin
-    exec (env={PATH=$bin}) corepack enable --install-directory $bin |>:complete
+    exec ~env={PATH=$bin} corepack enable --install-directory $bin
     $bin
 }
 
 # Yarn (npm) uses `sh` to spawn things, so include the usual PATH locations.
-yarn = fn ^:args -> exec (env={PATH="$bin:/usr/bin:/bin"}) yarn ^$args
+yarn = fn ^:args -> exec ~env={PATH="$bin:/usr/bin:/bin"} yarn ^args
 
 ## Commands include:
 ## * `package` - Build the vscode extension package.
