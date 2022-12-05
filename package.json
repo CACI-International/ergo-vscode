@@ -6,7 +6,7 @@
     "categories": ["Formatters", "Programming Languages"],
     "publisher": "CACI",
     "author": "Alex Franchuk",
-    "license": "Proprietary",
+    "license": "MIT",
     "icon": "images/icon.jpg",
     "engines": {
         "vscode": "^1.63.0"
